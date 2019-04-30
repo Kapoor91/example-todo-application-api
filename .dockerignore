@@ -1,3 +1,15 @@
+__pycache__
+*.pyc
+
+.history
+.vscode
+
 venv/
-__pycache__/
-api/tests/
+.tox/
+
+.coverage
+test_results/
+
+.circleci/
+
+tests/
