@@ -1,0 +1,26 @@
+version: 2.0
+jobs:
+  toxify_api:
+    working_directory: ~/example-todo-application-api
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - checkout:
+          name: checkout
+      - run:
+          name: Install tox for testing
+          command: sudo pip install tox
+      - run:
+          name: Running test defined in tox.ini file
+          command: tox
+      - store_test_results:
+          path: test_results
+      - store_artifacts:
+          path: test_results
+          destination: api_test_results
+
+workflows:
+  version: 2
+  CI:
+    jobs:
+      - toxify_api
