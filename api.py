@@ -2,7 +2,7 @@ import os
 from todo_api.app_file import get_app
 
 
-def run_app():
+def get_configured_app():
     """
     Get an API instance and run with configuration object depending on
     `TODO_APP_API_ENV` environment variable
@@ -16,8 +16,5 @@ def run_app():
         configuration_object = 'config.conf_testing'
 
     app = get_app(configuration_object)
-    app.run(port=8000)
 
-
-if __name__ == '__main__':
-    run_app()
+    return app
