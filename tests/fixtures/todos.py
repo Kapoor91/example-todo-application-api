@@ -1,4 +1,4 @@
-todo_fixture = {
+todos_fixture = {
     'table': 'todos',
     'records': [
         {
