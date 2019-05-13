@@ -1,7 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
 from importlib import import_module
 
 db = SQLAlchemy()
+ma = Marshmallow()
 
 MODELS = {'Todos'}
 

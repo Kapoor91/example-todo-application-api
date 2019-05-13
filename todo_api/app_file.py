@@ -2,7 +2,7 @@ import connexion
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
-from todo_api.models import db, load_models
+from todo_api.models import db, ma, load_models
 
 
 def get_app(config_object):
@@ -22,6 +22,14 @@ def get_app(config_object):
     setup_db(flask_app)
 
     return app
+
+
+def init_flask_plugin(flask_app):
+    """
+    Add all flask plugins to the given flask app
+    """
+    setup_db(flask_app)
+    ma.init_app(flask_app)
 
 
 def setup_db(flask_app):
