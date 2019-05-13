@@ -39,7 +39,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Todos'
+                type: object
+                properties:
+                  todos:
+                    $ref: '#/components/schemas/Todos'
         default:
           description: Unexpected error
     post:
