@@ -1,4 +1,3 @@
-from todo_api.models import db
 from todo_api.models.Todos import Todos, TodosSchema
 
 

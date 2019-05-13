@@ -1,5 +1,4 @@
 import connexion
-from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
 from todo_api.models import db, ma, load_models
