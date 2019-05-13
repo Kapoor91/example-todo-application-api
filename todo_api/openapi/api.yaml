@@ -135,14 +135,17 @@ components:
               readOnly: true
             done:
               type: boolean
+              description: Status, if the Todo Task is done or not
     NewTodo:  
       required:
         - title
       properties:
         title:
           type: string
+          description: Title of the Todo Task
         description:
           type: string
+          description: Description of the Todo Task
     Todos:
       type: array
       items:
