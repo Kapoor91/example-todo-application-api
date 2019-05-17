@@ -1,0 +1,28 @@
+openapi: 3.0.0
+info:
+  version: 0.1.0
+  title: Example Todo Application
+  description: This API allow you to manage the TODO application
+  contact:
+    email: contact@localhost.com
+servers:
+  - url: /v0
+tags:
+- name: greeting
+  description: Operation about greeting
+
+paths:
+  /hello:
+    get:
+      tags:
+      - greeting
+      summary: Generate Hello World
+      operationId: todo_api.controllers.greeting.hello
+      responses:
+        200:
+          description: Greeting from the API
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Hello There"

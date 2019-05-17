@@ -1,0 +1,11 @@
+__pycache__
+*.pyc
+
+.history
+.vscode
+
+venv/
+.tox/
+
+.coverage
+test_results/
