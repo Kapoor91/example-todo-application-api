@@ -16,13 +16,13 @@ todos_fixture = {
         {
             'id': 3,
             'title': 'Todo 3',
-            'description': None,
+            'description': '',
             'done': True
         },
         {
             'id': 4,
             'title': 'Todo 4',
-            'description': None,
+            'description': '',
             'done': False
         }
     ]

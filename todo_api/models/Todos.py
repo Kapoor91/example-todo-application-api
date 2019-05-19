@@ -6,7 +6,7 @@ class Todos(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(128), nullable=False)
-    description = db.Column(db.String(), nullable=True)
+    description = db.Column(db.String(), nullable=False, default='')
     done = db.Column(db.Boolean, nullable=False, default=False)
 
     def update(self, id=None, title=None, description=None, done=None):
