@@ -35,3 +35,22 @@ def test_find_without_fixture(client_app, session):
     assert req.status_code == 200
     assert req.is_json
     assert DeepDiff(expected, req.json, ignore_order=True) == {}
+
+
+@pytest.mark.parametrize('payload, expected', [
+    (
+        {'title': 'MyTitleTest1', 'description': 'MyDescriptionTest1'},
+        {'title': 'MyTitleTest1', 'description': 'MyDescriptionTest1'}
+    ),
+    (
+        {'title': 'MyTitleTest2'},
+        {'title': 'MyTitleTest2', 'description': ''}
+    )
+])
+def test_create_todos(payload, expected, client_app, session):
+    req = client_app.post('/v0/todos', json=payload)
+
+    assert req.status_code == 201
+    assert req.json['todo']['title'] == expected['title']
+    assert req.json['todo']['description'] == expected['description']
+    assert req.json['todo']['done'] == False  # noqa: E712,E261
