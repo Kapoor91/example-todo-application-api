@@ -1,4 +1,5 @@
 from todo_api.models.Todos import Todos, TodosSchema
+from todo_api.models import db
 
 
 def find_todos():
@@ -13,7 +14,14 @@ def find_todos():
 
 
 def create_todos(body):
-    pass
+    """ Create a todo task in DB """
+    todo_schema = TodosSchema()
+    new_todo = todo_schema.load(body, session=db.session).data
+
+    db.session.add(new_todo)
+    db.session.commit()
+
+    return {'todo': todo_schema.dump(new_todo).data}, 201
 
 
 def find_todos_by_id(id):
