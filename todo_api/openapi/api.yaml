@@ -60,6 +60,13 @@ paths:
       responses:
         201:
           description: Todo has been added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  todo:
+                    $ref: "#/components/schemas/Todo"
   /todos/{id}:
     get:
       tags:
@@ -132,6 +139,7 @@ components:
         - required:
             - id
             - done
+            - description
           properties:
             id:
               type: integer
