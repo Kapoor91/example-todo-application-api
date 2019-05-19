@@ -19,16 +19,19 @@ def flask_app():
     yield app
 
     ctx.pop()
+    db.drop_all()
 
 
 @pytest.fixture(scope='function')
 def session():
+    db.create_all()
     session = db.session()
 
     yield session
 
     session.rollback()
     session.close()
+    db.drop_all()
 
 
 @pytest.fixture

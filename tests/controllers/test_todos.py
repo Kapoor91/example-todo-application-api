@@ -54,3 +54,20 @@ def test_create_todos(payload, expected, client_app, session):
     assert req.json['todo']['title'] == expected['title']
     assert req.json['todo']['description'] == expected['description']
     assert req.json['todo']['done'] == False  # noqa: E712,E261
+
+
+def test_find_todos_by_id(client_app, todos_session):
+    todo_id = 1
+    expected = {
+        'todo': {
+            'id': 1,
+            'title': 'Todo 1',
+            'description': 'Description 1',
+            'done': False
+        }
+    }
+
+    req = client_app.get('/v0/todos/{todo_id}'.format(todo_id=todo_id))
+
+    assert req.status_code == 200
+    assert DeepDiff(expected, req.json, ignore_order=True) == {}
