@@ -67,14 +67,14 @@ paths:
                 properties:
                   todo:
                     $ref: "#/components/schemas/Todo"
-  /todos/{id}:
+  /todos/{todo_id}:
     get:
       tags:
       - todo
       summary: Get todo task by ID
       operationId: todo_api.controllers.todos.find_todos_by_id
       parameters:
-        - name: id
+        - name: todo_id
           in: path
           required: true
           description: ID of the todo task to fetch
@@ -86,16 +86,23 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Todo"
+                type: object
+                properties:
+                  todo:
+                    $ref: "#/components/schemas/Todo"
         404:
           description: No matching todo task with the ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
     put:
       tags:
       - todo
       summary: Update a todo task by id
       operationId: todo_api.controllers.todos.update_todos_by_id
       parameters:
-        - name: id
+        - name: todo_id
           in: path
           required: true
           description: ID of the todo task to update
@@ -116,7 +123,7 @@ paths:
       summary: Delete todo task by ID
       operationId: todo_api.controllers.todos.delete_todos_by_id
       parameters:
-        - name: id
+        - name: todo_id
           in: path
           required: true
           description: ID of the todo task to dekete
@@ -161,3 +168,9 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/Todo'
+    Error:
+      type: object
+      properties:
+        error:
+          description: Error message
+          type: string
