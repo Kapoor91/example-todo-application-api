@@ -154,7 +154,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Todo"
+                type: object
+                properties:
+                  todo:
+                    $ref: "#/components/schemas/Todo"
         404:
           description: No matching todo task with the ID   
 components:
