@@ -1,0 +1,192 @@
+openapi: 3.0.0
+info:
+  version: 0.1.0
+  title: Example Todo Application
+  description: This API allow you to manage the TODO application
+  contact:
+    email: contact@localhost.com
+servers:
+  - url: /v0
+tags:
+- name: greeting
+  description: Operation about greeting
+- name: todo
+  description: Operation about todo
+paths:
+  /hello:
+    get:
+      tags:
+      - greeting
+      summary: Generate Hello World
+      operationId: todo_api.controllers.greeting.hello
+      responses:
+        200:
+          description: Greeting from the API
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Hello There"
+  /todos:
+    get:
+      tags:
+      - todo
+      summary: Returns all todo task
+      operationId: todo_api.controllers.todos.find_todos
+      responses:
+        200:
+          description: All todo task availables
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  todos:
+                    $ref: '#/components/schemas/Todos'
+        default:
+          description: Unexpected error
+    post:
+      tags:
+      - todo
+      summary: Create a new todo task
+      operationId: todo_api.controllers.todos.create_todos
+      requestBody:
+        description: Todo to add
+        required: true
+        content:
+          application/json:
+            schema:
+              x-body-name: todo
+              $ref: '#/components/schemas/NewTodo'
+      responses:
+        201:
+          description: Todo has been added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  todo:
+                    $ref: "#/components/schemas/Todo"
+  /todos/{todo_id}:
+    get:
+      tags:
+      - todo
+      summary: Get todo task by ID
+      operationId: todo_api.controllers.todos.find_todos_by_id
+      parameters:
+        - name: todo_id
+          in: path
+          required: true
+          description: ID of the todo task to fetch
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Todo task that match id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  todo:
+                    $ref: "#/components/schemas/Todo"
+        404:
+          description: No matching todo task with the ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+      - todo
+      summary: Update a todo task by id
+      operationId: todo_api.controllers.todos.update_todos_by_id
+      parameters:
+        - name: todo_id
+          in: path
+          required: true
+          description: ID of the todo task to update
+          schema:
+            type: integer
+      requestBody:
+        description: Todo field to update
+        required: true
+        content:
+          application/json:
+            schema:
+              x-body-name: todo
+              $ref: '#/components/schemas/Todo'
+      responses:
+        200:
+          description: Todo has been updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  todo:
+                    $ref: "#/components/schemas/Todo"
+        201:
+          description: Todo has been added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  todo:
+                    $ref: "#/components/schemas/Todo"
+    delete:
+      tags:
+      - todo
+      summary: Delete todo task by ID
+      operationId: todo_api.controllers.todos.delete_todos_by_id
+      parameters:
+        - name: todo_id
+          in: path
+          required: true
+          description: ID of the todo task to dekete
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Todo task that has been deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  todo:
+                    $ref: "#/components/schemas/Todo"
+        404:
+          description: No matching todo task with the ID   
+components:
+  schemas:
+    Todo:
+      allOf:
+        - $ref: '#/components/schemas/NewTodo'
+        - properties:
+            id:
+              type: integer
+              readOnly: true
+            done:
+              type: boolean
+              description: Status, if the Todo Task is done or not
+    NewTodo:
+      properties:
+        title:
+          type: string
+          description: Title of the Todo Task
+        description:
+          type: string
+          description: Description of the Todo Task
+    Todos:
+      type: array
+      items:
+        $ref: '#/components/schemas/Todo'
+    Error:
+      type: object
+      properties:
+        error:
+          description: Error message
+          type: string

@@ -1,0 +1,16 @@
+__pycache__
+*.pyc
+
+venv/
+.tox/
+
+.coverage
+test_results/
+
+.circleci/
+.gitignore
+.dockerignore
+
+tests/
+setup.cfg
+tox.ini

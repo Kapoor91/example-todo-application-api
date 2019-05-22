@@ -1,0 +1,13 @@
+__pycache__
+*.pyc
+
+.history
+.vscode
+
+venv/
+.tox/
+
+.coverage
+test_results/
+
+conf_local.py

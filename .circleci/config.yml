@@ -1,0 +1,60 @@
+version: 2.0
+jobs:
+  toxify_api:
+    working_directory: ~/example-todo-application-api
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - checkout:
+          name: checkout
+      - run:
+          name: Install tox for testing
+          command: sudo pip install tox
+      - run:
+          name: Running test defined in tox.ini file
+          command: tox
+      - store_test_results:
+          path: test_results
+      - store_artifacts:
+          path: test_results
+          destination: api_test_results
+
+  build_docker_image:
+    environment:
+      IMAGE_NAME: oltho/example-todo-application-api
+    docker: 
+      - image: circleci/buildpack-deps:stretch
+    steps:
+      - checkout:
+          name: Checkout
+      - setup_remote_docker
+      - run:
+          name: Build image
+          command: docker build -t $IMAGE_NAME:$CIRCLE_BRANCH-$CIRCLE_SHA1 .
+      - run:
+          name: Publish Docker Image to Docker Hub
+          command: |
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            docker push $IMAGE_NAME:$CIRCLE_BRANCH-$CIRCLE_SHA1
+      - run:
+          name: Add latest tag for master branch
+          command: |
+            if [[ "${CIRCLE_BRANCH}" == "master" ]]
+            then
+            docker tag $IMAGE_NAME:$CIRCLE_BRANCH-$CIRCLE_SHA1 $IMAGE_NAME:latest &&
+            docker push $IMAGE_NAME:latest
+            fi
+
+workflows:
+  version: 2
+  CI:
+    jobs:
+      - toxify_api
+      - build_docker_image:
+          requires:
+            - toxify_api
+          filters:
+            branches:
+              only:
+               - master
+               - dev
