@@ -13,11 +13,11 @@ def find_todos():
     return result, 200
 
 
-def create_todos(body):
+def create_todos(todo):
     """ Create a todo task in DB """
     todo_schema = TodosSchema()
-    new_todo = todo_schema.load(body, session=db.session).data
 
+    new_todo = Todos(**todo)
     db.session.add(new_todo)
     db.session.commit()
 
@@ -35,7 +35,7 @@ def find_todos_by_id(todo_id):
         return {'error': 'Todo task not found for ID: {todo_id}'.format(todo_id=todo_id)}
 
 
-def update_todos_by_id():
+def update_todos_by_id(todo_id, body):
     pass
 
 

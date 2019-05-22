@@ -9,6 +9,10 @@ class Todos(db.Model):
     description = db.Column(db.String(), nullable=False, default='')
     done = db.Column(db.Boolean, nullable=False, default=False)
 
+    def __init__(self, title, description=None, **kwargs):
+        self.title = title
+        self.description = description
+
     def update(self, id=None, title=None, description=None, done=None):
         if title is not None:
             self.title = title
