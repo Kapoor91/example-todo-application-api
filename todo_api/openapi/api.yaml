@@ -109,15 +109,33 @@ paths:
           description: ID of the todo task to update
           schema:
             type: integer
-        - name: body
-          in: body
-          description: Updated todo task
-          required: true
-          schema:
-            $ref: '#/components/schemas/Todo'
+      requestBody:
+        description: Todo field to update
+        required: true
+        content:
+          application/json:
+            schema:
+              x-body-name: todo
+              $ref: '#/components/schemas/Todo'
       responses:
+        200:
+          description: Todo has been updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  todo:
+                    $ref: "#/components/schemas/Todo"
         201:
           description: Todo has been added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  todo:
+                    $ref: "#/components/schemas/Todo"
     delete:
       tags:
       - todo
@@ -144,20 +162,14 @@ components:
     Todo:
       allOf:
         - $ref: '#/components/schemas/NewTodo'
-        - required:
-            - id
-            - done
-            - description
-          properties:
+        - properties:
             id:
               type: integer
               readOnly: true
             done:
               type: boolean
               description: Status, if the Todo Task is done or not
-    NewTodo:  
-      required:
-        - title
+    NewTodo:
       properties:
         title:
           type: string

@@ -1,4 +1,5 @@
 import pytest
+from flask import json
 
 from deepdiff import DeepDiff
 from sqlalchemy import Table
@@ -71,3 +72,48 @@ def test_find_todos_by_id(client_app, todos_session):
 
     assert req.status_code == 200
     assert DeepDiff(expected, req.json, ignore_order=True) == {}
+
+
+def test_update_todos_by_id(client_app, todos_session):
+    todo_id = 1
+    payload = {
+        'title': 'Blablo'
+    }
+    expected = {
+        'todo': {
+            'id': 1,
+            'title': 'Blablo',
+            'description': 'Description 1',
+            'done': False
+        }
+    }
+
+    # BUG: when using json=payload, call don't find the todo by id
+    req = client_app.put('/v0/todos/{todo_id}'.format(todo_id=todo_id),
+                         data=json.dumps(payload),
+                         headers={"Content-Type": "application/json"})
+
+    assert req.status_code == 200
+    assert DeepDiff(expected, req.json, ignore_order=True) == {}
+
+
+def test_update_todos_by_id_create(client_app, todos_session):
+    todo_id = 9999
+
+    payload = {
+        'title': 'SomeTitle'
+    }
+    expected = {
+        'title': 'SomeTitle',
+        'description': '',
+        'done': False
+    }
+
+    req = client_app.put('/v0/todos/{todo_id}'.format(todo_id=todo_id),
+                         data=json.dumps(payload),
+                         headers={"Content-Type": "application/json"})
+
+    assert req.status_code == 201
+    assert req.json['todo']['title'] == expected['title']
+    assert req.json['todo']['description'] == expected['description']
+    assert req.json['todo']['done'] == expected['done']

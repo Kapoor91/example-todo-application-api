@@ -13,7 +13,7 @@ class Todos(db.Model):
         self.title = title
         self.description = description
 
-    def update(self, id=None, title=None, description=None, done=None):
+    def update(self, title=None, description=None, done=None, **kwargs):
         if title is not None:
             self.title = title
         if description is not None:
