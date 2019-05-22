@@ -1,9 +1,6 @@
 __pycache__
 *.pyc
 
-.history
-.vscode
-
 venv/
 .tox/
 
@@ -11,5 +8,9 @@ venv/
 test_results/
 
 .circleci/
+.gitignore
+.dockerignore
 
 tests/
+setup.cfg
+tox.ini
