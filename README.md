@@ -24,7 +24,7 @@ Depending on the environnment variable `TODO_APP_API_ENV`, the following file wi
 
 | TODO_APP_API_ENV  | config file |
 | ---------- | ---------- |
-| DEV | conf_local.py |
+| DEVELOPMENT | conf_local.py |
 | TESTING | conf_testing.py |
 | other | conf_prod.py |
 
@@ -34,4 +34,10 @@ We will run unit testing and code quality with the following command
 ```bash
 pytest
 flake8
+```
+
+## Run Server
+Run an instance of the server on the default host (127.0.0.1) and port (8000)
+```bash
+python manage.py runserver
 ```

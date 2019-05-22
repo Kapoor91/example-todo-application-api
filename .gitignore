@@ -9,3 +9,5 @@ venv/
 
 .coverage
 test_results/
+
+conf_local.py
