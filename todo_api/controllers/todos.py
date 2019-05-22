@@ -51,5 +51,17 @@ def update_todos_by_id(todo_id, todo):
         return create_todos(todo)
 
 
-def delete_todos_by_id():
-    pass
+def delete_todos_by_id(todo_id):
+    """ Delete a todo task by ID in DB """
+    todo = Todos.query.get(todo_id)
+
+    if todo is not None:
+        todo_schema = TodosSchema()
+        todo_delete_data = todo_schema.dump(todo).data
+
+        db.session.delete(todo)
+        db.session.commit()
+
+        return {'todo': todo_delete_data}, 200
+    else:
+        return {'error': 'Todo task not found for ID: {todo_id}'.format(todo_id=todo_id)}, 404
