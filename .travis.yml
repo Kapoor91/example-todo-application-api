@@ -1,0 +1,18 @@
+dist: xenial
+
+services:
+- docker
+
+language: python
+python:
+  - "3.7"
+
+env:
+  global:
+    - COMMIT=${TRAVIS_COMMIT::8}
+    - DOCKER_REPO=oltho/example-todo-application-api
+
+install: pip install tox codecov
+script: tox && codecov
+after_success:
+  - sh .travis/build_docker.sh
