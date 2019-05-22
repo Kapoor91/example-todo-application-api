@@ -16,3 +16,5 @@ SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://' \
         db_port=_DB_PORT,
         db_name=_DB_NAME,
     )
+
+SQLALCHEMY_TRACK_MODIFICATIONS = False
