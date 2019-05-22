@@ -5,8 +5,8 @@ ENV = 'production'
 _DB_USERNAME = os.environ['DB_USERNAME']
 _DB_PASSWORD = os.environ['DB_PASSWORD']
 _DB_IP = os.environ['DB_IP']
-_DB_PORT = os.environ['DB_PORT']
-_DB_NAME = os.environ['DB_NAME']
+_DB_PORT = os.getenv('DB_PORT', '5432')
+_DB_NAME = os.getenv('DB_NAME', 'todo_app_db')
 
 SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://' \
     + '{db_username}:{db_password}@{db_ip}:{db_port}/{db_name}'.format(

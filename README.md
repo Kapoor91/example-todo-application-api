@@ -29,15 +29,30 @@ Depending on the environnment variable `TODO_APP_API_ENV`, the following file wi
 | other | conf_prod.py |
 
 ## Running Test
-We will run unit testing and code quality with the following command
+We will run unit testing and code quality with the following command:
 
 ```bash
 pytest
 flake8
 ```
 
+Test can also be run inside a new virtual environnment by using the command:
+
+```bash
+tox
+```
+
 ## Run Server
 Run an instance of the server on the default host (127.0.0.1) and port (8000)
+
 ```bash
 python manage.py runserver
 ```
+
+If you want your application to listen on another IP/PORT please refer to: 
+```python manage.py runserver -h```
+
+
+## Docker
+Docker image can be build for this application by using the given Dockerfile
+When running the image please setup the environnment variable required by the `conf_prod.py` configuration file.
