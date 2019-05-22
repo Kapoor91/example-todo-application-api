@@ -6,6 +6,7 @@ from sqlalchemy import Table
 
 from todo_api.app_file import db
 from tests.fixtures.todos import todos_fixture
+from todo_api.models.Todos import Todos
 
 
 @pytest.fixture(scope='function')
@@ -117,3 +118,29 @@ def test_update_todos_by_id_create(client_app, todos_session):
     assert req.json['todo']['title'] == expected['title']
     assert req.json['todo']['description'] == expected['description']
     assert req.json['todo']['done'] == expected['done']
+
+
+def test_delete_todos_by_id_200(client_app, todos_session):
+    todo_id = 2
+    expected = {
+        'todo': {
+            'id': 2,
+            'title': 'Todo 2',
+            'description': 'Description 2',
+            'done': True
+        }
+    }
+
+    req = client_app.delete('/v0/todos/{todo_id}'.format(todo_id=todo_id))
+
+    assert req.status_code == 200
+    assert DeepDiff(expected, req.json, ignore_order=True) == {}
+    assert Todos.query.get(todo_id) is None
+
+
+def test_delete_todos_by_id_404(client_app, session):
+    todo_id = 2
+
+    req = client_app.delete('/v0/todos/{todo_id}'.format(todo_id=todo_id))
+
+    assert req.status_code == 404
