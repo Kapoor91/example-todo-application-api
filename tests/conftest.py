@@ -10,8 +10,6 @@ Session = sessionmaker()
 @pytest.yield_fixture(scope='session')
 def flask_app():
     app = get_app(conf_testing)
-    db.app = app.app
-    db.create_all()
 
     ctx = app.app.app_context()
     ctx.push()
@@ -19,7 +17,6 @@ def flask_app():
     yield app
 
     ctx.pop()
-    db.drop_all()
 
 
 @pytest.fixture(scope='function')
