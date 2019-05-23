@@ -9,5 +9,8 @@ if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker tag $DOCKER_REPO:$TRAVIS_BRANCH-$COMMIT $DOCKER_REPO:latest
 fi
 
+if [ ! -z "$TRAVIS_TAG" ]; then 
+    docker tag $DOCKER_REPO:$TRAVIS_BRANCH-$COMMIT $DOCKER_REPO:$TRAVIS_TAG
+fi
 
 docker push $DOCKER_REPO
