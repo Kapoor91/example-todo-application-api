@@ -32,7 +32,7 @@ def find_todos_by_id(todo_id):
         todo_schema = TodosSchema()
         return {'todo': todo_schema.dump(todo).data}, 200
     else:
-        return {'error': 'Todo task not found for ID: {todo_id}'.format(todo_id=todo_id)}
+        return {'error': 'Todo task not found for ID: {todo_id}'.format(todo_id=todo_id)}, 404
 
 
 def update_todos_by_id(todo_id, todo):

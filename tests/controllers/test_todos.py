@@ -75,20 +75,26 @@ def test_find_todos_by_id(client_app, todos_session):
     assert DeepDiff(expected, req.json, ignore_order=True) == {}
 
 
-def test_update_todos_by_id(client_app, todos_session):
-    todo_id = 1
-    payload = {
-        'title': 'Blablo'
-    }
-    expected = {
-        'todo': {
-            'id': 1,
-            'title': 'Blablo',
-            'description': 'Description 1',
-            'done': False
-        }
-    }
+def test_find_todos_by_id_404(client_app, todos_session):
+    todo_id = 999
 
+    req = client_app.get('/v0/todos/{todo_id}'.format(todo_id=todo_id))
+
+    assert req.status_code == 404
+
+
+@pytest.mark.parametrize('todo_id, payload, expected', [
+    (1, {'title': 'Blablo'},
+     {'todo': {'id': 1, 'title': 'Blablo',
+               'description': 'Description 1', 'done': False}},),
+    (1, {'description': 'FakeDescription'},
+     {'todo': {'id': 1, 'title': 'Todo 1',
+               'description': 'FakeDescription', 'done': False}},),
+    (1, {'done': True},
+     {'todo': {'id': 1, 'title': 'Todo 1',
+               'description': 'Description 1', 'done': True}},)
+])
+def test_update_todos_by_id(todo_id, payload, expected, client_app, todos_session):
     # BUG: when using json=payload, call don't find the todo by id
     req = client_app.put('/v0/todos/{todo_id}'.format(todo_id=todo_id),
                          data=json.dumps(payload),
