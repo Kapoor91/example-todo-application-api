@@ -5,9 +5,11 @@ venv/
 .tox/
 
 .coverage
+.coverage.xml
 test_results/
 
-.circleci/
+.travis
+.travis.yml
 .gitignore
 .dockerignore
 

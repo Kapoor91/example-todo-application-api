@@ -1,0 +1,38 @@
+dist: xenial
+
+services:
+- docker
+
+language: python
+python:
+  - "3.7"
+
+env:
+  global:
+    - COMMIT=${TRAVIS_COMMIT::8}
+    - DOCKER_REPO=oltho/example-todo-application-api
+
+jobs:
+  include:
+    - stage: Test
+      name: "Tox"
+      install: pip install tox codecov
+      script:
+        - tox
+        - codecov
+
+    - stage: Build and publish
+      name: "dockerhub"
+      if: type = push
+      install: true
+      script: sh .travis/build_docker.sh
+
+    - stage: Deployment
+      install: true
+      script: echo "TODO implement deployment"
+
+stages:
+  - Test
+  - Build and publish
+  - name: Deployment
+    if: (branch = master) AND (type = push)
