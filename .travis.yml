@@ -1,28 +1,35 @@
 dist: xenial
 
-services:
-- docker
-
-language: python
-python:
-  - "3.7"
-
 env:
   global:
     - COMMIT=${TRAVIS_COMMIT::8}
     - DOCKER_REPO=oltho/example-todo-application-api
 
+  
 jobs:
   include:
     - stage: Test
       name: "Tox"
+
+      language: python
+      python:
+        - "3.7"
+      addons :
+        sonarcloud:
+          organization: "oltho-github"
+
       install: pip install tox codecov
       script:
         - tox
         - codecov
+        - sonar-scanner
 
     - stage: Build and publish
       name: "dockerhub"
+      
+      services:
+      - docker
+
       if: type = push
       install: true
       script: sh .travis/build_docker.sh
