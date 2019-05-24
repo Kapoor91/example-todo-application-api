@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/Oltho/example-todo-application-api.svg?branch=master)](https://travis-ci.org/Oltho/example-todo-application-api)
 [![codecov.io](https://codecov.io/gh/Oltho/example-todo-application-api/branch/master/graphs/badge.svg)](https://codecov.io/gh/Oltho/example-todo-application-api)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=oltho-example-todo-application-api&metric=alert_status)](https://sonarcloud.io/dashboard/index/oltho-example-todo-application-api)
 
 # Example Todo application - API
 API part of the todo application, using connexion framework following the OpenAPI 3.0 specification
