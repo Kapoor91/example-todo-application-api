@@ -10,7 +10,7 @@ connexion==2.2.0
 coverage==4.5.3
 deepdiff==4.0.6
 entrypoints==0.3
-filelock==3.0.10
+filelock==3.0.12
 flake8==3.7.7
 Flask==1.0.2
 flask-marshmallow==0.10.1
